@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+/* ================= ROOT SYSTEM ================= */
+
+:root {
+    --purple: #8B5CF6;
+    --purple-light: #C084FC;
+    --bg1: #140B2D;
+    --bg2: #1F1147;
+    --bg3: #2A0E5C;
+    --text: #E9D5FF;
+    --glass: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.08);
+    --transition: 0.4s cubic-bezier(.17,.67,.33,1);
+}
+
+/* ================= GLOBAL ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #3B0764);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+    color: var(--text);
+    line-height: 1.65;
+    overflow-x: hidden;
+    position: relative;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ================= BACKGROUND LAYERS ================= */
+
+.bg-ambient {
+    position: fixed;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(168,85,247,0.25), transparent 70%);
+    filter: blur(120px);
+    animation: floatAmbient 30s ease-in-out infinite alternate;
+    z-index: -2;
+}
+
+@keyframes floatAmbient {
+    from { transform: translate(-100px, -100px); }
+    to { transform: translate(200px, 150px); }
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 70px 70px;
+    animation: gridMove 80s linear infinite;
+    z-index: -1;
+}
+
+@keyframes gridMove {
+    from { background-position: 0 0; }
+    to { background-position: 400px 400px; }
+}
+
+/* ================= LAYOUT ================= */
+
+.container {
+    width: 88%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section {
+    padding: 70px 0;
+    position: relative;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    padding: 18px 0;
+    background: linear-gradient(90deg, var(--purple), var(--purple-light));
+    box-shadow: 0 8px 30px rgba(139,92,246,0.4);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    transition: var(--transition);
+}
+
+.menu a:hover {
+    transform: translateY(-3px);
+    opacity: 0.85;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    padding: 110px 0 80px;
+    text-align: center;
+    position: relative;
+}
+
+/* Name Shimmer */
+.main-name {
+    font-size: 3.8rem;
+    font-weight: 800;
+    background: linear-gradient(
+        90deg,
+        var(--purple-light),
+        var(--purple),
+        #ffffff,
+        var(--purple),
+        var(--purple-light)
+    );
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 8s linear infinite;
+}
+
+@keyframes shimmer {
+    from { background-position: 0%; }
+    to { background-position: 300%; }
+}
+
+.role,
+.desc {
+    animation: fadeUp 1.4s ease forwards;
+}
+
+.desc {
+    max-width: 600px;
+    margin: 15px auto 0;
+    opacity: 0.85;
+}
+
+/* ================= ORBIT ================= */
+
+.orbit {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation:
+        rotateOrbit 50s linear infinite,
+        pulseOrbit 8s ease-in-out infinite alternate;
+    z-index: -1;
+}
+
+@keyframes rotateOrbit {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes pulseOrbit {
+    from { opacity: 0.3; }
+    to { opacity: 0.8; }
+}
+
+/* ================= CARDS ================= */
+
+.card,
+.glass-card,
+.skill-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    padding: 28px;
+    transition: var(--transition);
+    transform-style: preserve-3d;
+}
+
+.card:hover,
+.glass-card:hover,
+.skill-card:hover {
+    transform: translateY(-12px) rotateX(6deg) rotateY(-6deg);
+    box-shadow: 0 25px 50px rgba(139,92,246,0.6);
+}
+
+/* ================= GRID ================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+/* ================= ICON ANIMATION ================= */
+
+.skill-icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    transition: transform 0.5s ease;
+}
+
+.skill-card:hover .skill-icon {
+    transform: rotate(12deg) scale(1.3);
+}
+
+/* ================= SECTION TITLE ================= */
+
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.section-title::after {
+    content: "";
+    width: 70px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--purple), var(--purple-light));
+    display: block;
+    margin: 12px auto 0;
+    border-radius: 20px;
+}
+
+/* ================= SCROLL REVEAL ================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================= FADE ================= */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+    padding: 45px 0;
+    text-align: center;
+    background: #0B0520;
+    color: var(--purple-light);
+    font-weight: 500;
+    box-shadow: 0 -10px 40px rgba(139,92,246,0.3);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+    .main-name {
+        font-size: 2.4rem;
+    }
+    .section {
+        padding: 55px 0;
+    }
+}
